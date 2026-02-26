@@ -21,6 +21,57 @@ public class Village {
 	public void setChef(Chef chef) {
 		this.chef = chef;
 	}
+	
+	
+	// Définition de la classe interne
+	
+	public class Marche {
+		private Etal[] etals;
+		
+		public Marche(int nbEtals) {
+			for(int i=0;i<nbEtals;i++) {
+				etals = new Etal[nbEtals];
+				this.etals[i] = new Etal();
+			}
+		}
+		
+		void utiliseEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
+			etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
+		}
+		
+		int trouverEtalLibre() {
+			for(int i=0;i<etals.length;i++) {
+				if(etals[i].isEtalOccupe()) {
+					return i;
+				}
+			}
+			return -1;
+		}
+		
+		Etal[] trouverEtals(String produit) {
+			Etal[] etalsProduit;
+			int nbEtalsProduit = 0;
+			for(int i=0;i<etals.length;i++) {
+				if(etals[i].contientProduit(produit)) {
+					nbEtalsProduit ++;
+				}
+			}
+			etalsProduit = new Etal[nbEtalsProduit];
+			int indice = 0;
+			for(int i=0;i<etals.length;i++) {
+				if(etals[i].contientProduit(produit)) {
+					etalsProduit[indice] = etals[i];
+					indice++;
+				}
+			}
+			return etalsProduit;
+		}
+	}
+	
+	
+	
+	
+	
 
 	public void ajouterHabitant(Gaulois gaulois) {
 		if (nbVillageois < villageois.length) {
